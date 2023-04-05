@@ -1,8 +1,8 @@
 # Imported necessary libraries and modules
-import requests
 import os
 from dotenv import load_dotenv
 import aiohttp
+from typing import Dict, Any
 
 # Load environment variables
 load_dotenv()
@@ -17,7 +17,7 @@ APPLICATION_DATA_ID = "938956540159881230"
 INTERACTION_URL = "https://discord.com/api/v9/interactions"
 
 # Create a function to prompt self bot
-async def PassPromptToSelfBot(prompt : str):
+async def PassPromptToSelfBot(prompt: str) -> aiohttp.ClientResponse:
     # Define the payload to be sent to the server
     payload = {
         "type": 2,
@@ -72,7 +72,7 @@ async def PassPromptToSelfBot(prompt : str):
             return response
 
 # Create a function to upscale image
-async def Upscale(index : int, messageId : str, messageHash : str):
+async def Upscale(index: int, messageId: str, messageHash: str) -> aiohttp.ClientResponse:
     # Define the payload to be sent to server
     payload = {
         "type": 3,
@@ -99,7 +99,7 @@ async def Upscale(index : int, messageId : str, messageHash : str):
             return response
 
 # Create a function to generate image variation
-async def Variation(index : int,messageId : str, messageHash : str):
+async def Variation(index: int, messageId: str, messageHash: str) -> aiohttp.ClientResponse:
     # Define the payload to be sent to server
     payload = {
         "type": 3,
@@ -126,7 +126,7 @@ async def Variation(index : int,messageId : str, messageHash : str):
             return response
 
 # Create a function to upscale image to maximum 
-async def MaxUpscale(messageId : str, messageHash : str):
+async def MaxUpscale(messageId: str, messageHash: str) -> aiohttp.ClientResponse:
     # Define the payload to be sent to server
     payload = {
         "type": 3,
