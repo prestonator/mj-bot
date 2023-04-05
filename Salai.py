@@ -1,20 +1,24 @@
+# Imported necessary libraries and modules
 import requests
 import os
 from dotenv import load_dotenv
+import aiohttp
 
 # Load environment variables
 load_dotenv()
 
+# Set constants for environment variables
 SERVER_ID = os.environ.get('SERVER_ID')
 CHANNEL_ID = os.environ.get('CHANNEL_ID')
 SALAI_TOKEN = os.environ.get('SALAI_TOKEN')
-APPLICATION_ID = "936929561302675456"  # added a constant variable for app ID
-APPLICATION_DATA_VERSION = "1077969938624553050" # added a constant variable for app data Version
-APPLICATION_DATA_ID = "938956540159881230" # added a constant variable for app data id
+APPLICATION_ID = "936929561302675456"
+APPLICATION_DATA_VERSION = "1077969938624553050"
+APPLICATION_DATA_ID = "938956540159881230"
 INTERACTION_URL = "https://discord.com/api/v9/interactions"
 
-# Combined the repetitive code into one function with customizable parameters
-def PassPromptToSelfBot(prompt : str):
+# Create a function to prompt self bot
+async def PassPromptToSelfBot(prompt : str):
+    # Define the payload to be sent to the server
     payload = {
         "type": 2,
         "guild_id": SERVER_ID,
@@ -22,7 +26,6 @@ def PassPromptToSelfBot(prompt : str):
         "message_flags": 0,
         "application_id": APPLICATION_ID,
         "session_id": "2fb980f65e5c9a77c96ca01f2c242cf6",
-        # customized parameters
         "data": {
             "version": APPLICATION_DATA_VERSION,
             "id": APPLICATION_DATA_ID,
@@ -58,15 +61,19 @@ def PassPromptToSelfBot(prompt : str):
         }
     }
 
-    header = {
+    # Set the authorization header with necessary token  
+    headers = {
         'authorization' : SALAI_TOKEN
     }
-    response = requests.post(INTERACTION_URL, json=payload, headers=header)
-    return response
+    
+    # Send the request to the server via POST method with defined payload and header in JSON format
+    async with aiohttp.ClientSession() as session:
+        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
+            return response
 
-
-
-def Upscale(index : int, messageId : str, messageHash : str):
+# Create a function to upscale image
+async def Upscale(index : int, messageId : str, messageHash : str):
+    # Define the payload to be sent to server
     payload = {
         "type": 3,
         "guild_id": SERVER_ID,
@@ -77,18 +84,23 @@ def Upscale(index : int, messageId : str, messageHash : str):
         "session_id": "45bc04dd4da37141a5f73dfbfaf5bdcf",
         "data": {
             "component_type": 2,
-            "custom_id": "MJ::JOB::upsample::{}::{}".format(index, messageHash)
+            "custom_id": f"MJ::JOB::upsample::{index}::{messageHash}"
         }
     }  
     
-    header = {
+    # Set the authorization header with necessary token
+    headers = {
         'authorization' : SALAI_TOKEN
     }
-    response = requests.post(INTERACTION_URL, json=payload, headers=header)
-    return response
 
+    # Send the request to the server via POST method with defined payload and header in JSON format
+    async with aiohttp.ClientSession() as session:
+        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
+            return response
 
-def Variation(index : int,messageId : str, messageHash : str):
+# Create a function to generate image variation
+async def Variation(index : int,messageId : str, messageHash : str):
+    # Define the payload to be sent to server
     payload = {
         "type": 3,
         "guild_id": SERVER_ID,
@@ -99,19 +111,23 @@ def Variation(index : int,messageId : str, messageHash : str):
         "session_id": "1f3dbdf09efdf93d81a3a6420882c92c",
         "data": {
             "component_type": 2,
-            "custom_id": "MJ::JOB::variation::{}::{}".format(index,
-            messageHash)
+            "custom_id": f"MJ::JOB::variation::{index}::{messageHash}"
         }
     }
 
-    header = {
+    # Set the authorization header with necessary token
+    headers = {
         'authorization' : SALAI_TOKEN
     }
-    response = requests.post(INTERACTION_URL, json=payload, headers=header)
-    return response
 
+    # Send the request to the server via POST method with defined payload and header in JSON format
+    async with aiohttp.ClientSession() as session:
+        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
+            return response
 
-def MaxUpscale(messageId : str, messageHash : str):
+# Create a function to upscale image to maximum 
+async def MaxUpscale(messageId : str, messageHash : str):
+    # Define the payload to be sent to server
     payload = {
         "type": 3,
         "guild_id": SERVER_ID,
@@ -122,18 +138,16 @@ def MaxUpscale(messageId : str, messageHash : str):
         "session_id": "1f3dbdf09efdf93d81a3a6420882c92c",
         "data": {
             "component_type": 2,
-            "custom_id": "MJ::JOB::upsample_max::1::{}::SOLO".format(messageHash)
+            "custom_id": f"MJ::JOB::upsample_max::1::{messageHash}::SOLO"
         }
     }
 
-    header = {
+    # Set the authorization header with necessary token
+    headers = {
         'authorization' : SALAI_TOKEN
     }
-    response = requests.post(INTERACTION_URL, json=payload, headers=header)
-    return response
-
-
-
-
-
-  
+    
+    # Send the request to the server via POST method with defined payload and header in JSON format
+    async with aiohttp.ClientSession() as session:
+        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
+            return response

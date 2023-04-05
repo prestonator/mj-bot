@@ -4,6 +4,10 @@ WORKDIR /bot
 
 COPY requirements.txt /bot/
 
+RUN apt update && apt install -y git
+
+RUN pip install --upgrade pip
+
 RUN pip install -r requirements.txt
 
 COPY . /bot
