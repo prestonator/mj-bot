@@ -13,7 +13,6 @@ import multiprocessing
 # load_dotenv()
 
 DAVINCI_TOKEN = os.getenv('DAVINCI_TOKEN')
-print("DAVINCI_TOKEN:", os.getenv('DAVINCI_TOKEN'))
 USE_MESSAGED_CHANNEL = bool(os.getenv('USE_MESSAGED_CHANNEL'))
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MID_JOURNEY_ID = os.getenv('MID_JOURNEY_ID')
