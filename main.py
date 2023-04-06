@@ -167,7 +167,7 @@ def start_bot():
 
 # Start the FastAPI server
 def start_fastapi_server():
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info", reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8269, log_level="info", reload=True)
 
 if __name__ == "__main__":
     bot_process = multiprocessing.Process(target=start_bot)

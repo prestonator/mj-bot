@@ -14,4 +14,7 @@ COPY . /bot
 
 RUN pip install -U py-cord==2.4.1
 
+# Expose the FastAPI server port
+EXPOSE 8269
+
 CMD python main.py
