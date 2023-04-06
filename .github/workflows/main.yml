@@ -26,3 +26,10 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/discord-bot:latest
+          build-args: |
+            DAVINCI_TOKEN=${{ secrets.DAVINCI_TOKEN }}
+            SERVER_ID=${{ secrets.SERVER_ID }}
+            SALAI_TOKEN=${{ secrets.SALAI_TOKEN }}
+            CHANNEL_ID=${{ secrets.CHANNEL_ID }}
+            MID_JOURNEY_ID=${{ secrets.MID_JOURNEY_ID }}
+            USE_MESSAGED_CHANNEL=${{ secrets.USE_MESSAGED_CHANNEL }}           
