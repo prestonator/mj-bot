@@ -2,8 +2,13 @@
 import discord
 from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
 import os
+from fastapi import FastAPI
+from pydantic import BaseModel
 from dotenv import load_dotenv
 from typing import Dict, Any
+import uvicorn
+import multiprocessing
+
 
 load_dotenv()
 
@@ -143,4 +148,33 @@ async def on_message(message):
 
 
 # Running the bot using the token provided in the .env file.
-bot.run(DAVINCI_TOKEN)
+# bot.run(DAVINCI_TOKEN)
+class Prompt(BaseModel):
+    prompt: str
+
+app = FastAPI()
+
+@app.post("/send_prompt")
+async def send_prompt(prompt_data: Prompt):
+    prompt = prompt_data.prompt
+    response = await PassPromptToSelfBot(prompt)
+    return {"message": "Image creation initiated"}
+
+
+# Start the Discord bot
+def start_bot():
+    bot.run(DAVINCI_TOKEN)
+
+# Start the FastAPI server
+def start_fastapi_server():
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info", reload=True)
+
+if __name__ == "__main__":
+    bot_process = multiprocessing.Process(target=start_bot)
+    fastapi_process = multiprocessing.Process(target=start_fastapi_server)
+
+    bot_process.start()
+    fastapi_process.start()
+
+    bot_process.join()
+    fastapi_process.join()
