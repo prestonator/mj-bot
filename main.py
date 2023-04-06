@@ -4,15 +4,16 @@ from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from typing import Dict, Any
 import uvicorn
 import multiprocessing
 
 
-load_dotenv()
+# load_dotenv()
 
 DAVINCI_TOKEN = os.getenv('DAVINCI_TOKEN')
+print("DAVINCI_TOKEN:", os.getenv('DAVINCI_TOKEN'))
 USE_MESSAGED_CHANNEL = bool(os.getenv('USE_MESSAGED_CHANNEL'))
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MID_JOURNEY_ID = os.getenv('MID_JOURNEY_ID')
