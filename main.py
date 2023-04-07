@@ -4,13 +4,10 @@ from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-# from dotenv import load_dotenv
 from typing import Dict, Any
 import uvicorn
 import multiprocessing
 
-
-# load_dotenv()
 
 DAVINCI_TOKEN = os.getenv('DAVINCI_TOKEN')
 USE_MESSAGED_CHANNEL = bool(os.getenv('USE_MESSAGED_CHANNEL'))
@@ -147,8 +144,7 @@ async def on_message(message):
         await message.delete()
 
 
-# Running the bot using the token provided in the .env file.
-# bot.run(DAVINCI_TOKEN)
+
 class Prompt(BaseModel):
     prompt: str
 
