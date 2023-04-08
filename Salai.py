@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 import aiohttp
 from typing import Dict, Any
-from PIL import Image
 # Load environment variables
 load_dotenv()
 
