@@ -8,12 +8,12 @@ from typing import Dict, Any
 import uvicorn
 import multiprocessing
 
-
 DAVINCI_TOKEN = os.getenv('DAVINCI_TOKEN')
 USE_MESSAGED_CHANNEL = bool(os.getenv('USE_MESSAGED_CHANNEL'))
 CHANNEL_ID = os.getenv('CHANNEL_ID')
 MID_JOURNEY_ID = os.getenv('MID_JOURNEY_ID')
 target_info = {'targetID': '', 'targetHash': ''}
+
 
 # Function to get the channel ID and reuse it
 def get_channel_id(ctx, use_messaged_channel):

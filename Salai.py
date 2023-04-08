@@ -152,29 +152,3 @@ async def MaxUpscale(messageId: str, messageHash: str) -> aiohttp.ClientResponse
         async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
             return response
         
-
-
-async def split_image(image_file):
-    with Image.open(image_file) as im:
-        # Get the width and height of the original image
-        width, height = im.size
-        # Calculate the middle points along the horizontal and vertical axes
-        mid_x = width // 2
-        mid_y = height // 2
-        # Split the image into four equal parts
-        top_left = im.crop((0, 0, mid_x, mid_y))
-        top_right = im.crop((mid_x, 0, width, mid_y))
-        bottom_left = im.crop((0, mid_y, mid_x, height))
-        bottom_right = im.crop((mid_x, mid_y, width, height))
-
-        return top_left, top_right, bottom_left, bottom_right
-
-
-async def get_image_url(url: str, filename) -> aiohttp.ClientResponse:
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            if response.status == 200:
-                print(response)
-                print(response.url)
-                print(f"Image downloaded: {filename}")
-                return response.url
