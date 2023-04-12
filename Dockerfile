@@ -36,4 +36,4 @@ ENV USE_MESSAGED_CHANNEL=$USE_MESSAGED_CHANNEL
 # Expose the FastAPI server port
 EXPOSE 8269
 
-CMD python main.py
+CMD python run.py
