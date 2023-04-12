@@ -129,7 +129,6 @@ async def on_message(message):
         if attachment.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
             ctx = await bot.get_context(message)
             await upscale_generated_image(ctx, message, 1)  # Change the index according to your requirement
-            # await download_image(attachment.url, f"{file_prefix}{attachment.filename}")
             break
 
     await bot.process_commands(message)
