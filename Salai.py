@@ -15,6 +15,13 @@ APPLICATION_DATA_VERSION = "1077969938624553050"
 APPLICATION_DATA_ID = "938956540159881230"
 INTERACTION_URL = "https://discord.com/api/v9/interactions"
 
+
+async def send_request(payload: Dict[str, Any], headers: Dict[str, str]) -> aiohttp.ClientResponse:
+    async with aiohttp.ClientSession() as session:
+        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
+            return response
+
+
 # Create a function to prompt self bot
 async def PassPromptToSelfBot(prompt: str) -> aiohttp.ClientResponse:
     # Define the payload to be sent to the server
@@ -66,9 +73,7 @@ async def PassPromptToSelfBot(prompt: str) -> aiohttp.ClientResponse:
     }
     
     # Send the request to the server via POST method with defined payload and header in JSON format
-    async with aiohttp.ClientSession() as session:
-        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
-            return response
+    return await send_request(payload, headers)
 
 # Create a function to upscale image
 async def Upscale(index: int, messageId: str, messageHash: str) -> aiohttp.ClientResponse:
@@ -93,9 +98,7 @@ async def Upscale(index: int, messageId: str, messageHash: str) -> aiohttp.Clien
     }
 
     # Send the request to the server via POST method with defined payload and header in JSON format
-    async with aiohttp.ClientSession() as session:
-        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
-            return response
+    return await send_request(payload, headers)
 
 # Create a function to generate image variation
 async def Variation(index: int, messageId: str, messageHash: str) -> aiohttp.ClientResponse:
@@ -120,9 +123,7 @@ async def Variation(index: int, messageId: str, messageHash: str) -> aiohttp.Cli
     }
 
     # Send the request to the server via POST method with defined payload and header in JSON format
-    async with aiohttp.ClientSession() as session:
-        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
-            return response
+    return await send_request(payload, headers)
 
 # Create a function to upscale image to maximum 
 async def MaxUpscale(messageId: str, messageHash: str) -> aiohttp.ClientResponse:
@@ -147,7 +148,4 @@ async def MaxUpscale(messageId: str, messageHash: str) -> aiohttp.ClientResponse
     }
     
     # Send the request to the server via POST method with defined payload and header in JSON format
-    async with aiohttp.ClientSession() as session:
-        async with session.post(INTERACTION_URL, json=payload, headers=headers) as response:
-            return response
-        
+    return await send_request(payload, headers)
