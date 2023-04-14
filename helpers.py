@@ -6,7 +6,7 @@ import requests
 
 load_dotenv()
 
-IMAGE_WEBHOOK_URL = os.environ.get('IMAGE_WEBHOOK_URL')
+IMAGE_WEBHOOK_URL = os.getenv('IMAGE_WEBHOOK_URL')
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 
 
