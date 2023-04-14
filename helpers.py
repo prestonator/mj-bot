@@ -1,6 +1,12 @@
 # Helpers.py - create this file in the same directory as the current file
+from dotenv import load_dotenv
 import os
+import json
+import requests
 
+load_dotenv()
+
+IMAGE_WEBHOOK_URL = os.environ.get('IMAGE_WEBHOOK_URL')
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 
 
@@ -21,8 +27,15 @@ async def handle_response(ctx, response):
         return True
 
 
-# async def is_desired_image_message(message):
-#     for attachment in message.attachments:
-#         if attachment.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
-#             return True
-#     return False
+async def get_image_url(url):
+    data = {"url": url}
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(IMAGE_WEBHOOK_URL, data=json.dumps(data), headers=headers)
+    if response.status_code == 200:
+        print(f"Image URL sent to webhook: {url}")
+    else:
+        print(f"Failed to send image URL to webhook: {response.content}")
+
+
+async def send_to_webhook(url):
+    await get_image_url(url)

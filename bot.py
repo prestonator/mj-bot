@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
-from helpers import handle_response, get_channel_id
+from helpers import handle_response, get_channel_id, send_to_webhook
 import os
 
 DAVINCI_TOKEN = os.getenv("DAVINCI_TOKEN")
@@ -106,7 +106,12 @@ async def on_message(message):
             await upscale_generated_image(
                 ctx, message, 1
             )  # Change the index according to your requirement
-            break
+    
+    if "Image #" in message.content:
+        for attachment in message.attachments:
+            if attachment.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
+                print(attachment.url)
+                await send_to_webhook(attachment.url)
 
     await bot.process_commands(message)
 
