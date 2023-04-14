@@ -30,7 +30,8 @@ async def handle_response(ctx, response):
 async def get_image_url(url):
     data = {"url": url}
     headers = {"Content-Type": "application/json"}
-    response = requests.post(IMAGE_WEBHOOK_URL, data=json.dumps(data), headers=headers)
+    webhook = "https://n8n.jenkinsremote.com/webhook-test/7841daf9-7619-4428-80b5-19ed870bf207"
+    response = requests.post(webhook, data=json.dumps(data), headers=headers)
     if response.status_code == 200:
         print(f"Image URL sent to webhook: {url}")
     else:
